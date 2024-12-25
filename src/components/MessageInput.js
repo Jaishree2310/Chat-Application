@@ -27,16 +27,22 @@ export const MessageInput = () => {
 
   return (
     <div className="message-input-container">
-      <FileUpload />
+      {state.selectedContact && <FileUpload />} {/* Conditional render */}
       <div className="message-input">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type a message..."
-          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+          onKeyDown={(e) => e.key === 'Enter' && handleSend()} 
+          maxLength={500} 
         />
-        <button onClick={handleSend}>Send</button>
+        <button 
+          onClick={handleSend} 
+          disabled={!message.trim() || !state.selectedContact} 
+        >
+          Send
+        </button>
       </div>
     </div>
   );

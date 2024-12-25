@@ -1,24 +1,32 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useApp } from '../context/AppContext';
 
 export const FileUpload = () => {
   const fileInputRef = useRef(null);
   const { state, dispatch } = useApp();
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);  // For image previews
 
   const handleFileSelect = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Check file size (limit to 10MB)
     if (file.size > 10 * 1024 * 1024) {
       alert('File size must be less than 10MB');
       return;
     }
 
     try {
-      // Convert file to base64 for storage
-      const base64 = await fileToBase64(file);
+      setUploading(true);
+      setError(null);
       
+      const base64 = await fileToBase64(file);
+
+      if (file.type.startsWith('image/')) {
+        setFilePreview(base64);
+      }
+
       const fileMessage = {
         type: 'file',
         fileName: file.name,
@@ -34,9 +42,12 @@ export const FileUpload = () => {
         type: 'ADD_MESSAGE',
         payload: { contactId: state.selectedContact.id, message: fileMessage },
       });
+      
+      setUploading(false);
     } catch (error) {
+      setUploading(false);
+      setError('Error uploading file. Please try again.');
       console.error('Error uploading file:', error);
-      alert('Error uploading file. Please try again.');
     }
   };
 
@@ -61,20 +72,15 @@ export const FileUpload = () => {
       <button 
         className="attach-file"
         onClick={() => fileInputRef.current.click()}
+        disabled={uploading}
       >
         📎
       </button>
+
+      {uploading && <p>Uploading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
     </div>
   );
 };
-
-
-
-
-
-
-
-
-
-
 

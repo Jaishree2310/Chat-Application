@@ -1,24 +1,29 @@
+
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { MessageInput } from './MessageInput';
 import { Message } from './Message';
+import { useDebounce } from '../hooks/useDebounce';
 
 export const ChatWindow = () => {
   const { state, dispatch } = useApp();
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const messages = state.messages[state.selectedContact?.id] || [];
 
-  const filteredMessages = messages.filter((message) => {
-    if (!searchQuery) return true;
-    if (message.type === 'text') {
-      return message.text.toLowerCase().includes(searchQuery.toLowerCase());
+  const filterMessages = (message) => {
+    if (!debouncedSearchQuery) return true;
+    if (message.type === 'text' && message.text) {
+      return message.text.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
     }
-    if (message.type === 'file') {
-      return message.fileName.toLowerCase().includes(searchQuery.toLowerCase());
+    if (message.type === 'file' && message.fileName) {
+      return message.fileName.toLowerCase().includes(debouncedSearchQuery.toLowerCase());
     }
     return false;
-  });
+  };
+
+  const filteredMessages = messages.filter(filterMessages);
 
   const handleSearch = (e) => {
     const query = e.target.value;
@@ -38,11 +43,10 @@ export const ChatWindow = () => {
     <div className="chat-window">
       <div className="chat-header">
         <div className="contact-avatar">
-          {state.selectedContact.name.charAt(0)}
+          {state.selectedContact?.name.charAt(0)}
         </div>
-        <h2>{state.selectedContact.name}</h2>
+        <h2>{state.selectedContact?.name}</h2>
 
-        {/* Search Icon and Input */}
         <div className={`search-bar ${isSearchActive ? 'active' : ''}`}>
           {!isSearchActive && (
             <span
@@ -77,8 +81,9 @@ export const ChatWindow = () => {
       </div>
 
       <div className="messages-container">
-        {filteredMessages.map((message, index) => (
-          <Message key={index} message={message} />
+        {filteredMessages.length === 0 && <p>No messages found, Start your chat</p>}
+        {filteredMessages.map((message) => (
+          <Message key={message.id || message.timestamp} message={message} />
         ))}
       </div>
 
@@ -86,3 +91,11 @@ export const ChatWindow = () => {
     </div>
   );
 };
+
+
+
+
+
+
+
+
