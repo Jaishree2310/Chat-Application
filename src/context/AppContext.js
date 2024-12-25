@@ -9,7 +9,7 @@ const initialState = {
   ],
   selectedContact: null,
   messages: {},
-  searchQuery: '', // Added for search functionality
+  searchQuery: '', 
 };
 
 function appReducer(state, action) {
