@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppProvider } from './context/AppContext';
-import { ContactList } from './components/ContactList';  // Changed to named import
-import { ChatWindow } from './components/ChatWindow';   // Changed to named import
+import { ContactList } from './components/ContactList';  
+import { ChatWindow } from './components/ChatWindow';   
 import './styles/App.css';
 
 function App() {

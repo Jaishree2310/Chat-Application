@@ -1,39 +1,29 @@
+.contact-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-item.selected::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #10ee99;
+}
+
+.contact-item:hover:not(.selected) {
+  background-color: #f3f4f6;
+}
+
 .chat-window {
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: #ffffff;
   border-left: 1px solid #e5e7eb;
-}
-
-.chat-window-empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f9fafb;
-}
-
-.empty-state {
-  text-align: center;
-  color: #6b7280;
-}
-
-.empty-state h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #374151;
-}
-
-
-.chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  height: 72px;
+  flex-grow: 1;
 }
 
 .contact-info {
@@ -42,25 +32,6 @@
   gap: 1rem;
 }
 
-.contact-avatar {
-  width: 40px;
-  height: 40px;
-  background-color: #3b82f6;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 1.125rem;
-}
-
-.contact-details h2 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-}
 
 .online-status {
   display: flex;
@@ -93,7 +64,7 @@
 }
 
 .action-button:hover {
-  background-color: #f3f4f6;
+  background-color: #bbbfbc;
   color: #374151;
 }
 
@@ -120,12 +91,6 @@
   background: transparent;
 }
 
-.messages-container::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 3px;
-}
-
-
 .message {
   display: flex;
   margin-bottom: 0.5rem;
@@ -143,7 +108,7 @@
 }
 
 .message-own .message-content {
-  background-color: #3b82f6;
+  background-color: #00a884;
   color: white;
   border-bottom-right-radius: 0.25rem;
 }
@@ -168,7 +133,6 @@
   opacity: 0.8;
 }
 
-
 .message-input-container {
   padding: 1rem 1.5rem;
   background-color: #ffffff;
@@ -192,12 +156,12 @@
 }
 
 .message-input:focus {
-  border-color: #3b82f6;
+  border-color: #00a884;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
 .send-button {
-  background-color: #3b82f6;
+  background-color: #00a884;
   color: white;
   border: none;
   border-radius: 50%;
@@ -253,138 +217,6 @@
   }
 }
 
-.chat-layout {
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  background-color: #ffffff;
-  overflow: hidden;
-}
-
-.contact-list {
-  width: 320px;
-  height: 100vh;
-  background-color: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  overflow-y: auto;
-  flex-shrink: 0;
-}
-
-.contact-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.contact-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.contact-list::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 3px;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
-  gap: 0.875rem;
-}
-
-.contact-item:hover {
-  background-color: #f9fafb;
-}
-
-.contact-item.selected {
-  background-color: #eff6ff;
-}
-
-.contact-item:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 4rem;
-  right: 1rem;
-  height: 1px;
-  background-color: #f3f4f6;
-}
-
-.contact-avatar {
-  width: 40px;
-  height: 40px;
-  background-color: #3b82f6;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 1.125rem;
-  flex-shrink: 0;
-}
-
-.contact-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.contact-info h3 {
-  margin: 0;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.contact-info p {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #6b7280;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.contact-time {
-  font-size: 0.75rem;
-  color: #9ca3af;
-  flex-shrink: 0;
-  align-self: flex-start;
-  margin-top: 0.25rem;
-}
-
-.contact-item.selected .contact-info h3 {
-  color: #1d4ed8;
-}
-
-.contact-item.selected::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: #3b82f6;
-}
-
-.contact-item:hover:not(.selected) {
-  background-color: #f3f4f6;
-}
-
-.contact-item.unread .contact-info h3 {
-  font-weight: 700;
-}
-
-.contact-item.unread .contact-time {
-  color: #3b82f6;
-  font-weight: 600;
-}
-
 @media (max-width: 768px) {
   .chat-layout {
     flex-direction: column;
@@ -408,4 +240,173 @@
   .messages-container {
     max-height: calc(60vh - 140px);
   }
+}
+
+:root {
+  --primary-color: #00a884;
+  --primary-hover: #008f72;
+  --secondary-color: #f0f2f5;
+  --light-text: #667781;
+  --dark-text: #111;
+  --border-color: #e0e0e0;
+  --highlight-color: #fff176;
+}
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--secondary-color);
+  color: var(--dark-text);
+}
+/* App Layout */
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: var(--secondary-color);
+  overflow: hidden;
+  flex-direction: row;
+}
+/* Contact List */
+.contact-list {
+  width: 350px;
+  background-color: white;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  transition: width 0.3s ease-in-out;
+}
+.contact-list .search-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.contact-list .search-bar input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+.contact-item:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.02);
+}
+.contact-item.selected {
+  background-color: var(--primary-color);
+  color: white;
+}
+.contact-avatar {
+  width: 42px;
+  height: 42px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 12px;
+  font-size: 16px;
+}
+.contact-info h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+.contact-info p {
+  margin: 4px 0 0;
+  color: var(--light-text);
+  font-size: 14px;
+}
+.contact-time {
+  font-size: 12px;
+  color: var(--light-text);
+  text-align: right;
+}
+/* Chat Window */
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  grid-template-rows: 60px 1fr 60px;
+}
+.chat-window.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light-text);
+}
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--border-color);
+}
+.chat-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+.messages-container {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: var(--secondary-color);
+  scroll-behavior: smooth;
+}
+/* Messages */
+.message {
+  margin: 8px 0;
+  display: flex;
+}
+.message.sent {
+  justify-content: flex-end;
+}
+.message-content {
+  max-width: 65%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.message.sent .message-content {
+  background-color: #d9fdd3;
+}
+.message.received .message-content {
+  background-color: white;
+  border: 1px solid var(--border-color);
+}
+.message-time {
+  font-size: 12px;
+  color: var(--light-text);
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.contact-item {
+  animation: fadeIn 0.3s ease-in-out;
 }
