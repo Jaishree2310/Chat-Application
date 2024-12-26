@@ -6,6 +6,8 @@ const initialState = {
   contacts: [
     { id: 1, name: 'Alice Smith', lastMessage: 'Hey there!', timestamp: '10:30 AM' },
     { id: 2, name: 'Bob Johnson', lastMessage: 'See you soon!', timestamp: '09:15 AM' },
+    { id: 3, name: 'Jaishree Singh', lastMessage: 'Hey there', timestamp: '11:15 AM' },
+    { id: 4, name: 'Jaya Singh', lastMessage: 'Hey there', timestamp: '13:15 PM' },
   ],
   selectedContact: null,
   messages: {},
@@ -46,3 +48,8 @@ export function AppProvider({ children }) {
 export function useApp() {
   return useContext(AppContext);
 }
+
+
+
+
+
