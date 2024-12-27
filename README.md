@@ -2,6 +2,10 @@
 
 A React.js-based application that mimics WhatsApp Web with real-time messaging and offline capabilities.
 
+## Live: https://chat-application-orpin-eight.vercel.app/
+
+## Complete Documentation is provided in the doc.md file 
+
 ## Features
 - **Contact List**: Displays contacts on the left side.
 - **Chat Window**: Displays chat history with a selected contact.
