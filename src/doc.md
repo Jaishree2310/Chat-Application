@@ -169,6 +169,16 @@ Defines the visual style for the application, including:
 
 ---
 
+## **Challenges**
+
+### **Challenges with InstantDB:**
+1. Real-time data sync across clients.
+2. Handling network issues to avoid data loss.
+3. Ensuring performance with growing users.
+4. Cross-browser compatibility.
+
+---
+
 ## **How It Works**
 
 1. **Contact Selection:**
