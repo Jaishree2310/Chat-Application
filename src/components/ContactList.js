@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { tx } from "@instantdb/react";
 
 export function ContactList() {
-  const { state, dispatch } = useApp();
+  const { state, dispatch, db } = useApp();
+
+  // Query to get latest messages for each contact
+  const { data } = db.useQuery({
+    chatMessages: {
+      orderBy: { timestamp: 'desc' }
+    }
+  });
+
+  useEffect(() => {
+    if (data?.messages) {
+      // Update last messages for contacts
+      state.contacts.forEach(contact => {
+        const lastMessage = data.messages
+          .filter(msg => 
+            (msg.senderId === contact.id && msg.receiverId === state.currentUser.id) ||
+            (msg.senderId === state.currentUser.id && msg.receiverId === contact.id)
+          )
+          .sort((a, b) => b.timestamp - a.timestamp)[0];
+
+        if (lastMessage) {
+          dispatch({
+            type: 'UPDATE_CONTACT_LAST_MESSAGE',
+            payload: {
+              contactId: contact.id,
+              message: lastMessage.content
+            }
+          });
+        }
+      });
+    }
+  }, [data?.messages]);
 
   return (
     <div className="contact-list">
@@ -25,6 +57,3 @@ export function ContactList() {
     </div>
   );
 }
-
-
-

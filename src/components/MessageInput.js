@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { FileUpload } from './FileUpload';
+import { tx, id } from "@instantdb/react";
 
 export const MessageInput = () => {
   const [message, setMessage] = useState('');
-  const { state, dispatch } = useApp();
+  const { state, dispatch, db } = useApp();
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!message.trim() || !state.selectedContact) return;
 
     const newMessage = {
-      type: 'text',
-      text: message,
-      timestamp: new Date().toLocaleTimeString(),
-      isSent: true,
-      contactId: state.selectedContact.id,
+      id: id(),
+      content: message.trim(),
+      timestamp: new Date().getTime(),
+      senderId: state.currentUser.id,
+      receiverId: state.selectedContact.id,
+      conversationId: `${state.currentUser.id}-${state.selectedContact.id}`,
     };
 
+    // Add message to InstantDB
+    await db.transact(tx.messages[newMessage.id].update(newMessage));
+
+    // Update last message in contact list
     dispatch({
-      type: 'ADD_MESSAGE',
-      payload: { contactId: state.selectedContact.id, message: newMessage },
+      type: 'UPDATE_CONTACT_LAST_MESSAGE',
+      payload: {
+        contactId: state.selectedContact.id,
+        message: message.trim()
+      }
     });
 
     setMessage('');
@@ -27,7 +36,7 @@ export const MessageInput = () => {
 
   return (
     <div className="message-input-container">
-      {state.selectedContact && <FileUpload />} {/* Conditional render */}
+      {state.selectedContact && <FileUpload />}
       <div className="message-input">
         <input
           type="text"
@@ -39,7 +48,7 @@ export const MessageInput = () => {
         />
         <button 
           onClick={handleSend} 
-          disabled={!message.trim() || !state.selectedContact} 
+          disabled={!message.trim() || !state.selectedContact}
         >
           Send
         </button>
@@ -47,14 +56,3 @@ export const MessageInput = () => {
     </div>
   );
 };
-
-
-
-
-
-
-
-
-
-
-

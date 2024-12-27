@@ -1,16 +1,21 @@
 import React, { createContext, useReducer, useContext } from 'react';
+import { init } from "@instantdb/react";
+
+const db = init({
+  appId: "86adf673-aee9-461d-b0f7-4d3476cff133"
+});
 
 const AppContext = createContext();
 
 const initialState = {
   contacts: [
-    { id: 1, name: 'Alice Smith', lastMessage: 'Hey there!', timestamp: '10:30 AM' },
-    { id: 2, name: 'Bob Johnson', lastMessage: 'See you soon!', timestamp: '09:15 AM' },
-    { id: 3, name: 'Jaishree Singh', lastMessage: 'Hey there', timestamp: '11:15 AM' },
-    { id: 4, name: 'Jaya Singh', lastMessage: 'Hey there', timestamp: '13:15 PM' },
+    { id: '1', name: 'Alice Smith', lastMessage: 'Hey there!', timestamp: '10:30 AM' },
+    { id: '2', name: 'Bob Johnson', lastMessage: 'See you soon!', timestamp: '09:15 AM' },
+    { id: '3', name: 'Jaishree Singh', lastMessage: 'Hey there', timestamp: '11:15 AM' },
+    { id: '4', name: 'Jaya Singh', lastMessage: 'Hey there', timestamp: '13:15 PM' },
   ],
   selectedContact: null,
-  messages: {},
+  currentUser: { id: 'self', name: 'Current User' }, // Added current user info
   searchQuery: '', 
 };
 
@@ -18,16 +23,21 @@ function appReducer(state, action) {
   switch (action.type) {
     case 'SET_SELECTED_CONTACT':
       return { ...state, selectedContact: action.payload };
-    case 'ADD_MESSAGE':
+    case 'UPDATE_CONTACT_LAST_MESSAGE':
       return {
         ...state,
-        messages: {
-          ...state.messages,
-          [action.payload.contactId]: [
-            ...(state.messages[action.payload.contactId] || []),
-            action.payload.message,
-          ],
-        },
+        contacts: state.contacts.map(contact => 
+          contact.id === action.payload.contactId
+            ? { 
+                ...contact, 
+                lastMessage: action.payload.message,
+                timestamp: new Date().toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })
+              }
+            : contact
+        )
       };
     case 'SET_SEARCH_QUERY':
       return { ...state, searchQuery: action.payload };
@@ -38,8 +48,9 @@ function appReducer(state, action) {
 
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
+  
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={{ state, dispatch, db }}>
       {children}
     </AppContext.Provider>
   );
@@ -48,8 +59,3 @@ export function AppProvider({ children }) {
 export function useApp() {
   return useContext(AppContext);
 }
-
-
-
-
-
