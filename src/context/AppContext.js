@@ -9,10 +9,10 @@ const AppContext = createContext();
 
 const initialState = {
   contacts: [
-    { id: '1', name: 'Alice Smith', lastMessage: 'Hey there!', timestamp: '10:30 AM' },
+    { id: '1', name: 'Alice Smith', lastMessage: 'Hey there!', timestamp: '15:09 PM' },
     { id: '2', name: 'Bob Johnson', lastMessage: 'See you soon!', timestamp: '09:15 AM' },
-    { id: '3', name: 'Jaishree Singh', lastMessage: 'Hey there', timestamp: '11:15 AM' },
-    { id: '4', name: 'Jaya Singh', lastMessage: 'Hey there', timestamp: '13:15 PM' },
+    { id: '3', name: 'Jaishree Singh', lastMessage: 'call me later', timestamp: '5:30 PM' },
+    { id: '4', name: 'Jaya Singh', lastMessage: 'How are you', timestamp: '13:15 PM' },
   ],
   selectedContact: null,
   currentUser: { id: 'self', name: 'Current User' }, // Added current user info
